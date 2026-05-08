@@ -20,9 +20,9 @@ i=50
 while test $i -gt 0
 do
     echo Searching for "$winname"
-    if test "$(wmctrl -l | cut -f 5- -d ' ' | grep -ic ^"$winname"\$)" -eq 1; then
+    if test "$(wmctrl -l | tr -s ' ' | cut -f 4- -d ' ' | grep -ic ^"$winname"\$)" -eq 1; then
         # Meaning exactly 1 match exists, skip otherwise...
-        lineNumber=$(wmctrl -l | cut -f 5- -d ' ' | grep -in ^"$winname"\$ | cut -f 1 -d :)
+        lineNumber=$(wmctrl -l | tr -s ' ' | cut -f 4- -d ' ' | grep -in ^"$winname"\$ | cut -f 1 -d :)
         # Extracts the hexadecimal window ID (like 0x04800008)
         windowid=$(wmctrl -l | sed -En "$lineNumber{s/(0x[0-9a-fA-F]+).*/\1/;p}")
         picom-trans -w "$windowid" 100
